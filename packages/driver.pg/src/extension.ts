@@ -1,6 +1,7 @@
 import { IExtension, IExtensionPlugin, IDriverExtensionApi } from '@sqltools/types';
 import { ExtensionContext, extensions } from 'vscode';
 import { DRIVER_ALIASES } from './constants';
+import PgAuthenticationProvider from './PgAuthenticationProvider';
 const { publisher, name } = require('../package.json');
 const driverName = 'PostgreSQL/Cockroach';
 export async function activate(extContext: ExtensionContext): Promise<IDriverExtensionApi> {
@@ -45,6 +46,10 @@ export async function activate(extContext: ExtensionContext): Promise<IDriverExt
     }
   };
   api.registerPlugin(plugin);
+
+  extContext.subscriptions.push(
+    new PgAuthenticationProvider(extContext))
+
   return {
     driverName,
     parseBeforeSaveConnection: ({ connInfo }) => {
@@ -55,7 +60,7 @@ export async function activate(extContext: ExtensionContext): Promise<IDriverExt
         } else if (connInfo.usePassword.toString().toLowerCase().includes('empty')) {
           connInfo.password = '';
           propsToRemove.push('askForPassword');
-        } else if(connInfo.usePassword.toString().toLowerCase().includes('save')) {
+        } else if (connInfo.usePassword.toString().toLowerCase().includes('save')) {
           propsToRemove.push('askForPassword');
         }
       }
@@ -110,4 +115,4 @@ export async function activate(extContext: ExtensionContext): Promise<IDriverExt
   }
 }
 
-export function deactivate() {}
+export function deactivate() { }
