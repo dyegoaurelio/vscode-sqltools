@@ -62,6 +62,8 @@ export async function activate(extContext: ExtensionContext): Promise<IDriverExt
           propsToRemove.push('askForPassword');
         } else if (connInfo.usePassword.toString().toLowerCase().includes('save')) {
           propsToRemove.push('askForPassword');
+        } else if (connInfo.usePassword.toString().toLowerCase().includes('auth provider')) {
+          propsToRemove.push('askForPassword');
         }
       }
       propsToRemove.forEach(p => delete connInfo[p]);

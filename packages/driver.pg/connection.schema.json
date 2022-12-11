@@ -18,7 +18,8 @@
       "enum": [
         "Ask on connect",
         "Use empty password",
-        "Save password"
+        "Save password",
+        "AUTH PROVIDER"
       ],
       "default": "Ask on connect"
     },
@@ -236,7 +237,8 @@
           "properties": {
             "usePassword": {
               "enum": [
-                "Save password"
+                "Save password",
+                "AUTH PROVIDER"
               ]
             },
             "password": {
